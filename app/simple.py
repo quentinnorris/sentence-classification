@@ -1,14 +1,11 @@
 import sklearn
 from sklearn.model_selection import train_test_split
-from sklearn import preprocessing
 from sklearn import metrics
 from reader.filereader import read_glove_vectors, read_input_data
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import FeatureUnion, Pipeline
+from sklearn.pipeline import Pipeline
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
@@ -17,17 +14,14 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn import svm
 
 import numpy as np
-import pandas as pd
-import datetime
-import csv
 
 # load data
 texts, labels_index, labels = read_input_data("../data");
 X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2)
 
-# count_vect = CountVectorizer(stop_words="english")
-# tfidf_transformer = TfidfTransformer(use_idf=True, norm='l2')
-tfidf_vec = TfidfVectorizer(ngram_range=(1,2), stop_words="english");
+print(texts);
+
+tfidf_vec = TfidfVectorizer(ngram_range=(1,2), stop_words="english"); #token_pattern=r'\b\w+\b'
 
 text_clf = Pipeline([ 
     ('tfvec', tfidf_vec),
@@ -70,12 +64,13 @@ grid_params = {
 
 gsCV = GridSearchCV(text_clf, grid_params, verbose=5);
 gsCV.fit(X_train, y_train)
+
 print("Best Score: ", gsCV.best_score_)
 print("Best Params: ", gsCV.best_params_)
+
 preds = gsCV.predict(X_test);
 
-
-print(metrics.classification_report(y_test, preds, digits= 5, target_names=labels_index.keys()))
+print(metrics.classification_report(y_test, preds, digits=5, target_names=labels_index.keys()))
 
 
 

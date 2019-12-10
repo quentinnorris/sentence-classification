@@ -27,14 +27,15 @@ def read_input_data(input_data_path):
 
 
     #texts = list(open(os.path.join(input_data_path, "input.txt"), "r").readlines()) #SAMPLE DATASET
-    #texts = list(open(os.path.join(input_data_path, "input_MR.txt"), "r").readlines()) # MR DATA SET
-    #with open(os.path.join(input_data_path, "label_MR.txt"), 'r') as label_f: # MR LABELS
+    with open(os.path.join(input_data_path, "input_MR.txt"), encoding='latin-1') as f:
+        texts = f.readlines() # MR DATA SET
+    with open(os.path.join(input_data_path, "label_MR.txt"), encoding='latin-1') as label_f: # MR LABELS
     #texts = list(open(os.path.join(input_data_path, "input_subj.txt"), "r").readlines()) # SUBJ DATA SET
     #with open(os.path.join(input_data_path, "label_subj.txt"), 'r') as label_f: #SUBJ LABELS
     #texts = list(open(os.path.join(input_data_path, "input_trec.txt"), "r").readlines()) # TREC DATA SET
     #with open(os.path.join(input_data_path, "label_trec.txt"), 'r') as label_f: #TREC LABELS
-    texts = list(open(os.path.join(input_data_path, "input_sst2.txt"), "r").readlines()) # SST2 DATA SET
-    with open(os.path.join(input_data_path, "label_sst2.txt"), 'r') as label_f: #SST2 LABELS
+    # texts = list(open(os.path.join(input_data_path, "input_sst2.txt"), "r").readlines()) # SST2 DATA SET
+    # with open(os.path.join(input_data_path, "label_sst2.txt"), 'r') as label_f: #SST2 LABELS
         largest_label_id = 0
         for line in label_f:
             label = str(line.strip())
