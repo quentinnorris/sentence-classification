@@ -21,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2
 
 print(texts);
 
-tfidf_vec = TfidfVectorizer(ngram_range=(1,2), stop_words="english"); #token_pattern=r'\b\w+\b'
+tfidf_vec = TfidfVectorizer(stop_words="english"); #token_pattern=r'\b\w+\b'
 
 text_clf = Pipeline([ 
     ('tfvec', tfidf_vec),
@@ -33,12 +33,13 @@ text_clf = Pipeline([
     #('clf', RandomForestClassifier()),
 ])
 
+# comment out parmeters that you want to tune, not all of them are here yet
 grid_params = {
     # 'tfvec__min_df': (2,3),
     'tfvec__max_df': (0.8, 0.9),
     # 'tfvec__ngram_range': ((1,3),(1,2)),
-    #'tfvec__sublinear_tf': (True, False),
-    #'tfvec__norm': ('l1', 'l2'),
+    # 'tfvec__sublinear_tf': (True, False),
+    # 'tfvec__norm': ('l1', 'l2'),
     # 'clf__alpha': np.linspace(1, 1.5, 6), # For Naive Bayes
     # 'clf__fit_prior': [True, False], # For Naive Bayes
     # 'clf__decision_function_shape': ('ovo', 'ovr'), # For svm.SVC
