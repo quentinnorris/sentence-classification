@@ -10,8 +10,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.neighbors import NearestNeighbors
-from sklearn import svm
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import LinearSVC
 
 import numpy as np
 
@@ -25,11 +25,10 @@ tfidf_vec = TfidfVectorizer(stop_words="english"); #token_pattern=r'\b\w+\b'
 
 text_clf = Pipeline([ 
     ('tfvec', tfidf_vec),
-    ('clf', svm.LinearSVC())
-    #('clf', KNeighborsClassifier()),
+    #('clf', LinearSVC())
+    #('clf', KNeighborsClassifier())
     #('clf', MultinomialNB()),
     #('clf', LogisticRegression()),
-    #('clf', DecisionTreeClassifier()),
     #('clf', RandomForestClassifier()),
 ])
 

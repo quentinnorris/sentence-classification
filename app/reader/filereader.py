@@ -27,8 +27,7 @@ def read_input_data(input_data_path):
 
 
     #texts = list(open(os.path.join(input_data_path, "input.txt"), "r").readlines()) #SAMPLE DATASET
-    with open(os.path.join(input_data_path, "input_MR.txt"), encoding='latin-1') as f:
-        texts = f.readlines() # MR DATA SET
+    texts = list(open(os.path.join(input_data_path, "input_MR.txt"), encoding='latin-1')) # MR DATA SET
     with open(os.path.join(input_data_path, "label_MR.txt"), encoding='latin-1') as label_f: # MR LABELS
     #texts = list(open(os.path.join(input_data_path, "input_subj.txt"), "r").readlines()) # SUBJ DATA SET
     #with open(os.path.join(input_data_path, "label_subj.txt"), 'r') as label_f: #SUBJ LABELS
