@@ -21,12 +21,12 @@ X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2
 
 print(texts);
 
-tfidf_vec = TfidfVectorizer(stop_words="english"); #token_pattern=r'\b\w+\b'
+tfidf_vec = TfidfVectorizer(stop_words="english", ngram_range=(1,2), norm='l2'); #token_pattern=r'\b\w+\b'
 
 text_clf = Pipeline([ 
     ('tfvec', tfidf_vec),
-    #('clf', LinearSVC())
-    #('clf', KNeighborsClassifier())
+    #('clf', LinearSVC(0.9))
+    ('clf', KNeighborsClassifier(n_neighbors=7))
     #('clf', MultinomialNB()),
     #('clf', LogisticRegression()),
     #('clf', RandomForestClassifier()),
@@ -34,35 +34,20 @@ text_clf = Pipeline([
 
 # comment out parmeters that you want to tune, not all of them are here yet
 grid_params = {
+    #### tfvec ####
     # 'tfvec__min_df': (2,3),
-    'tfvec__max_df': (0.8, 0.9),
+    # 'tfvec__max_df': (0.8, 0.9),
     # 'tfvec__ngram_range': ((1,3),(1,2)),
     # 'tfvec__sublinear_tf': (True, False),
-    # 'tfvec__norm': ('l1', 'l2'),
-    # 'clf__alpha': np.linspace(1, 1.5, 6), # For Naive Bayes
-    # 'clf__fit_prior': [True, False], # For Naive Bayes
-    # 'clf__decision_function_shape': ('ovo', 'ovr'), # For svm.SVC
-    # 'clf__max_iter': np.arange(600, 6000, 600),
-    # 'clf__fit_intercept': (True, False),
-    # 'clf__intercept_scaling': (0.1, 2.0, 0.2),
-    # 'clf__multi_class': ('ovr', 'crammer_singer'),
-    # 'clf__dual': (True, False),
-    # 'clf__penalty': ('l1', 'l2'),
-    # 'clf__C': np.arange(0.2, 2.0, 0.2),
-    # 'clf__tol': np.arange(0.00002, 0.0002, 0.00006),
-    # 'clf__solver': ('newton-cg', 'lbfgs'),
-    # 'clf__n_estimators': (10, 100),
-    # 'clf__random_state': (0,1,2),
-    # 'clf__max_features': ('auto', 30, 60),
-    # 'clf__learning_rate': ('optimal', 'optimal'),
-    # 'clf__eta0': (1,1),
-    # 'clf__average': (1, 5, 10,20),
-    # 'clf__epsilon': (0.5, 1),
-    # 'clf__loss': ('modified_huber', 'huber'),
-    # 'clf__alpha': (0.00001, 0.0001, 0.001),
+    # 'tfvec__norm': ('l1', 'l2')
+    #### LinearSVC() ####
+    # 'clf__C': (0.5,0.8,1,1.5)
+    #### KNeighboursClassifier ####
+    #'clf__n_neighbors': (2,3,4,5,6,7,8)
+
 }
 
-gsCV = GridSearchCV(text_clf, grid_params, verbose=5);
+gsCV = GridSearchCV(text_clf, grid_params, cv=5, verbose=5);
 gsCV.fit(X_train, y_train)
 
 print("Best Score: ", gsCV.best_score_)
